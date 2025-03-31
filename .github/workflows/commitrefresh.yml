@@ -1,0 +1,31 @@
+# action.yml
+name: 'Install Snowflake CLI'
+description: 'Download and install snowflake-cli through pipx'
+branding:
+  icon: 'terminal'
+  color: 'blue'
+  
+inputs:
+  cli-version:
+    description: 'Snowflake CLI version'
+    required: false
+    default: 'latest'
+
+  default-config-file-path:
+    required: false
+    default: './config.toml'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download snowflake-cli ${{ inputs.cli_version }}
+      shell: bash
+      run: bash $GITHUB_ACTION_PATH/scripts/install-snowcli.sh
+      env:
+        CLI_VERSION: ${{ inputs.cli-version }} 
+
+    - name: Set up config.toml
+      shell: bash
+      run: bash $GITHUB_ACTION_PATH/scripts/setup-config-file.sh
+      env:
+        CONFIG_FILE_PATH: ${{ inputs.default-config-file-path }} 
