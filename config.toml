@@ -1,0 +1,5 @@
+default_connection_name = "cicdConnection"
+
+[connections]
+[connections.cicdConnection]
+user = ""
